@@ -1,0 +1,105 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>紫藤巷 · 绝望主妇第一季台词本 | 听力练习版</title>
+<meta name="description" content="《绝望主妇》第一季 1-5 集台词本，配整段与逐句音频，支持 0.5× / 0.8× 倍速与隐藏文本盲听练习。" />
+<link rel="icon" type="image/svg+xml" href="assets/favicon.svg" />
+<link rel="stylesheet" href="assets/style.css" />
+</head>
+<body>
+
+<header class="topbar">
+  <a class="brand" href="#/">
+    <svg class="brand-mark" viewBox="0 0 48 48" aria-hidden="true">
+      <defs>
+        <linearGradient id="wg" x1="0" y1="0" x2="1" y2="1">
+          <stop offset="0" stop-color="#a78fc4"/><stop offset="1" stop-color="#705196"/>
+        </linearGradient>
+      </defs>
+      <circle cx="24" cy="10" r="5" fill="url(#wg)" opacity=".85"/>
+      <circle cx="37" cy="19" r="5" fill="url(#wg)" opacity=".72"/>
+      <circle cx="33" cy="34" r="5" fill="url(#wg)" opacity=".82"/>
+      <circle cx="15" cy="34" r="5" fill="url(#wg)" opacity=".72"/>
+      <circle cx="11" cy="19" r="5" fill="url(#wg)" opacity=".85"/>
+      <circle cx="24" cy="24" r="3.4" fill="#faf6f0"/>
+      <circle cx="24" cy="24" r="1.6" fill="#b8615a"/>
+    </svg>
+    <span class="brand-text">
+      <span class="brand-en">Wisteria Lane</span>
+      <span class="brand-cn">绝望主妇 · 台词本</span>
+    </span>
+  </a>
+  <div class="topbar-spacer"></div>
+  <button class="top-btn" id="openSearch">
+    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.6-3.6"/></svg>
+    搜台词 <kbd>⌘K</kbd>
+  </button>
+</header>
+
+<main id="view"></main>
+
+<div class="player hidden" id="player">
+  <div class="player-progress" id="pbar" title="点击跳转">
+    <div class="pbar-fill" id="pfill"></div>
+    <div class="pbar-knob" id="pknob"></div>
+  </div>
+  <div class="player-inner">
+    <div class="p-main">
+      <button class="p-btn" id="btnPlay" aria-label="播放/暂停">
+        <svg id="icoPlay" width="17" height="17" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5.5v13l11-6.5z"/></svg>
+        <svg id="icoPause" width="17" height="17" viewBox="0 0 24 24" fill="currentColor" style="display:none"><rect x="7" y="5" width="3.6" height="14" rx="1.2"/><rect x="13.4" y="5" width="3.6" height="14" rx="1.2"/></svg>
+      </button>
+      <div class="p-info">
+        <div class="p-title" id="pTitle">—</div>
+        <div class="p-time" id="pTime">0:00 / 0:00</div>
+      </div>
+    </div>
+    <div class="p-actions">
+      <div class="speeds" id="speeds">
+        <span class="speed-label">倍速</span>
+        <button class="speed-btn" data-rate="0.5">0.5×</button>
+        <button class="speed-btn" data-rate="0.8">0.8×</button>
+        <button class="speed-btn" data-rate="1">1×</button>
+        <button class="speed-btn" data-rate="1.25">1.25×</button>
+      </div>
+      <div class="p-sep"></div>
+      <button class="p-btn small" id="btnPrev" title="上一句 (←)">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M6 5h2v14H6zM19 5.5v13l-10-6.5z"/></svg>
+      </button>
+      <button class="p-btn small" id="btnNext" title="下一句 (→)">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M16 5h2v14h-2zM5 5.5v13l10-6.5z"/></svg>
+      </button>
+      <button class="p-btn small" id="btnAuto" title="连播：一句播完自动下一句（默认关闭）">连播</button>
+      <button class="p-btn small" id="btnLoop" title="整段音频循环播放">循环</button>
+      <button class="p-btn small" id="btnMode" title="切换整段 / 单句">单句</button>
+      <button class="p-btn small" id="btnText" title="显示 / 隐藏台本文字 (T)">显示文本</button>
+    </div>
+  </div>
+</div>
+
+<div class="modal" id="modal">
+  <div class="search-box">
+    <div class="search-head">
+      <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="#8b8296" stroke-width="2.2" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.6-3.6"/></svg>
+      <input id="searchInput" type="text" placeholder="搜索台词、角色…（如 Gabrielle / death wish）" autocomplete="off" />
+      <button class="top-btn" id="closeSearch">Esc</button>
+    </div>
+    <div class="search-results" id="searchResults">
+      <div class="search-empty">输入关键词，在 5 集共 1777 句台词中查找</div>
+    </div>
+    <div class="search-foot"><span>↑ ↓ 选择</span><span>Enter 打开</span><span>Esc 关闭</span></div>
+  </div>
+</div>
+
+<script src="data/meta.js"></script>
+<script src="data/search.js"></script>
+<script src="data/e01.js"></script>
+<script src="data/e02.js"></script>
+<script src="data/e03.js"></script>
+<script src="data/e04.js"></script>
+<script src="data/e05.js"></script>
+<script src="assets/app.js"></script>
+</body>
+</html>
