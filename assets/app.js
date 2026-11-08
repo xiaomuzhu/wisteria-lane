@@ -4,6 +4,23 @@
    ========================================================== */
 (function () {
   const META = window.DH_META || { episodes: [], stats: {} };
+
+  /* meta.js 万一没加载成功（CDN 抖动），用已加载的剧集数据兜底重建目录 */
+  function ensureMeta() {
+    if (META.episodes && META.episodes.length) return;
+    const DH = window.DH || {};
+    const ids = ['e01', 'e02', 'e03', 'e04', 'e05'].filter(id => DH[id]);
+    META.episodes = ids.map(id => ({
+      id, title: DH[id].title,
+      parts: DH[id].parts.map(p => ({ id: p.id, title: p.title, n: p.lines.length }))
+    }));
+    META.stats = {
+      episodes: ids.length,
+      parts: META.episodes.reduce((a, e) => a + e.parts.length, 0),
+      lines: META.episodes.reduce((a, e) => a + e.parts.reduce((x, p) => x + p.n, 0), 0),
+      speakers: []
+    };
+  }
   const SEARCH = window.DH_SEARCH || [];
   const $ = (s, r = document) => r.querySelector(s);
 
@@ -337,6 +354,10 @@
   /* ---------------- 渲染：首页 ---------------- */
   function renderHome() {
     stopAudio(); player.classList.add('hidden');
+    if (!META.episodes.length) {
+      view.innerHTML = '<div class="wrap"><div class="empty">台本数据加载失败，请刷新页面重试。</div></div>';
+      return;
+    }
     S.epId = S.partId = null; S.part = null;
 
     const st = META.stats || {};
@@ -765,6 +786,7 @@
 
   /* ---------------- 初始化 ---------------- */
   function init() {
+    ensureMeta();
     syncSpeeds();
     $('#btnAuto').classList.toggle('on', S.autoNext);
     $('#btnLoop').classList.toggle('on', S.loop);
